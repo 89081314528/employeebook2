@@ -40,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeNotFound();
         }
         Employee employee = employeeList.get(0);
-       employeeList.contains(employee);
+
         EmployeeDto employeeDto = new EmployeeDto(employee.getEmployeeId(), employee.getFirstName(), employee.getLastName(),
                 employee.getSalary(), employee.getDepartmentId());
         return employeeDto;
