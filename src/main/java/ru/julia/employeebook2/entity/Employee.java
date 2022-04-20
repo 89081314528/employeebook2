@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -13,28 +14,27 @@ public class Employee {
 
     @Column(name = "emp_id")
     @Id
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(generator = "uuid2") // генерирует рандомный id
-    private UUID employeeId;
+    @GeneratedValue
+    private Integer employeeId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "salary")
     private Integer salary;
-    @Column(name = "dept_id")
-    private Integer departmentId;
+    @ManyToOne
+    @JoinColumn(name = "dept_id")
+    private Department department;
 
-    public Employee(String firstName, String lastName, Integer salary, Integer departmentId) {
+    public Employee(String firstName, String lastName, Integer salary) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.salary = salary;
-        this.departmentId = departmentId;
     }
     public Employee(){};
 
     public String toString() {
-        return firstName + " " + lastName + " " + salary + " " + departmentId;
+        return firstName + " " + lastName + " " + salary;
     }
 
     @Override
@@ -42,10 +42,11 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return employeeId.equals(employee.employeeId);
+        return Objects.equals(employeeId, employee.employeeId) && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(salary, employee.salary);
     }
 
-    public int hashCode() { // переопределить
-        return 31;
+    @Override
+    public int hashCode() {
+        return Objects.hash(employeeId, firstName, lastName, salary);
     }
 }

@@ -17,8 +17,8 @@ public class EmployeeController {
 
     @GetMapping("/add")
     public String add(@RequestParam String firstName, @RequestParam String lastName,
-                    @RequestParam Integer salary, @RequestParam Integer departmentId) {
-        return employeeService.add(firstName, lastName, salary, departmentId);
+                    @RequestParam Integer salary) {
+        return employeeService.add(firstName, lastName, salary);
     }
 
     @GetMapping("/remove")

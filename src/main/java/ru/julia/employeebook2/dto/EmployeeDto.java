@@ -1,15 +1,27 @@
 package ru.julia.employeebook2.dto;
 
-import java.util.UUID;
+import java.util.Objects;
 
 public class EmployeeDto {
-    private UUID employeeId;
+    private Integer employeeId;
     private String firstName;
     private String lastName;
     private Integer salary;
     private Integer departmentId;
 
-    public UUID getEmployeeId() {
+    public EmployeeDto(Integer employeeId, String firstName, String lastName, Integer salary, Integer departmentId) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.salary = salary;
+        this.departmentId = departmentId;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public Integer getEmployeeId() {
         return employeeId;
     }
 
@@ -25,42 +37,17 @@ public class EmployeeDto {
         return salary;
     }
 
-    public Integer getDepartmentId() {
-        return departmentId;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmployeeDto that = (EmployeeDto) o;
+        return Objects.equals(employeeId, that.employeeId) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(salary, that.salary);
     }
 
-    public EmployeeDto(UUID employeeId, String firstName, String lastName, Integer salary, Integer departmentId) {
-        this.employeeId = employeeId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.salary = salary;
-        this.departmentId = departmentId;
+    @Override
+    public int hashCode() {
+        return Objects.hash(employeeId, firstName, lastName, salary);
     }
-
-    public boolean equals(Object obj) {
-        EmployeeDto objEmployeeDto = (EmployeeDto) obj;
-        if ((this.employeeId == null && objEmployeeDto.employeeId != null) || (this.employeeId != null && objEmployeeDto.employeeId == null)
-                || (this.firstName == null && objEmployeeDto.firstName != null) || (this.firstName != null && objEmployeeDto.firstName == null)
-                || (this.lastName == null && objEmployeeDto.lastName != null) || (this.lastName != null && objEmployeeDto.lastName == null)
-                || (this.salary == null && objEmployeeDto.salary != null) || (this.salary != null && objEmployeeDto.salary == null)
-                || (this.departmentId == null && objEmployeeDto.salary != null) || (this.departmentId != null && objEmployeeDto.salary == null)
-        ) {
-            return false;
-        }
-
-        if (this.employeeId == null || (this.employeeId.equals(objEmployeeDto.employeeId))
-                && (this.firstName == null || this.firstName.equals(objEmployeeDto.firstName))
-                && (this.lastName == null || this.lastName.equals(objEmployeeDto.lastName))
-                && (this.salary == null || this.salary.equals(objEmployeeDto.salary))
-                && (this.departmentId == null || this.departmentId.equals(objEmployeeDto.departmentId))) {
-            return true;
-        }
-        return false;
-//        Objects.equals()
-    }
-
-//    public int hashCode() {
-//        Objects.hash()
-//    }
-
 }

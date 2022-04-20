@@ -8,7 +8,9 @@ import ru.julia.employeebook2.exception.EmployeeNotFound;
 import ru.julia.employeebook2.repository.EmployeeRepository;
 import ru.julia.employeebook2.service.EmployeeService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -16,8 +18,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Override
-    public String add(String firstName, String lastName, Integer salary, Integer departmentId) {
-        Employee employee = new Employee(firstName, lastName, salary, departmentId);
+    public String add(String firstName, String lastName, Integer salary) {
+        Employee employee = new Employee(firstName, lastName, salary);
         employeeRepository.save(employee);
         return "Сотрудник " + firstName + " " + lastName + " успешно создан";
     }
@@ -42,7 +44,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = employeeList.get(0);
 
         EmployeeDto employeeDto = new EmployeeDto(employee.getEmployeeId(), employee.getFirstName(), employee.getLastName(),
-                employee.getSalary(), employee.getDepartmentId());
+                employee.getSalary(), employee.getEmployeeId());
         return employeeDto;
+    }
+
+    @Override
+    public List<EmployeeDto> findAll() {
+        List<Employee> employees = employeeRepository.findAll();
+        return employees.stream()
+                .map(e -> new EmployeeDto(e.getEmployeeId(), e.getFirstName(),
+                        e.getLastName(), e.getSalary(), e.getDepartment().getDeptId()))
+                .collect(Collectors.toList());
     }
 }
