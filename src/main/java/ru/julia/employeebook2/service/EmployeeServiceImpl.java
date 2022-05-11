@@ -2,47 +2,50 @@ package ru.julia.employeebook2.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.julia.employeebook2.dto.EmployeeDto;
+import ru.julia.employeebook2.dto.FirstNameAndLastName;
 import ru.julia.employeebook2.entity.Employee;
 import ru.julia.employeebook2.exception.EmployeeNotFound;
-import ru.julia.employeebook2.repository.EmployeeRepository;
-import ru.julia.employeebook2.service.EmployeeService;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
-    private final EmployeeRepository employeeRepository;
+    Map<FirstNameAndLastName, Employee> employees = new HashMap<>();
 
     @Override
-    public String add(String firstName, String lastName, Integer salary, Integer departmentId) {
-        Employee employee = new Employee(firstName, lastName, salary, departmentId);
-        employeeRepository.save(employee);
+    public String add(Integer id, String firstName, String lastName, Integer salary, Integer departmentId) {
+        Employee employee = new Employee(id, firstName, lastName, salary, departmentId);
+        FirstNameAndLastName firstNameAndLastName = new FirstNameAndLastName(firstName, lastName);
+        employees.put(firstNameAndLastName, employee);
         return "Сотрудник " + firstName + " " + lastName + " успешно создан";
     }
 
     @Override
     public String remove(String firstName, String lastName) {
-        List<Employee> employeeList = employeeRepository.getByFirstNameAndLastName(firstName, lastName);
-        if (employeeList.isEmpty()) {
+        FirstNameAndLastName firstNameAndLastName = new FirstNameAndLastName(firstName, lastName);
+        if (!employees.containsKey(firstNameAndLastName)) {
             throw new EmployeeNotFound();
         }
-        Employee employee = employeeList.get(0);
-        employeeRepository.delete(employee);
+        employees.remove(firstNameAndLastName);
         return "Сотрудник " + firstName + " " + lastName + " удален";
     }
 
     @Override
-    public EmployeeDto find(String firstName, String lastName) {
-        List<Employee> employeeList = employeeRepository.getByFirstNameAndLastName(firstName, lastName);
-        if (employeeList.isEmpty()) {
+    public Employee find(String firstName, String lastName) {
+        FirstNameAndLastName firstNameAndLastName = new FirstNameAndLastName(firstName, lastName);
+        if (!employees.containsKey(firstNameAndLastName)) {
             throw new EmployeeNotFound();
         }
-        Employee employee = employeeList.get(0);
+        return employees.get(firstNameAndLastName);
 
-        EmployeeDto employeeDto = new EmployeeDto(employee.getEmployeeId(), employee.getFirstName(), employee.getLastName(),
-                employee.getSalary(), employee.getDepartmentId());
-        return employeeDto;
+    }
+
+    @Override
+    public Collection<Employee> findAll() {
+        return employees.values();
     }
 }
