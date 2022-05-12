@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.julia.employeebook2.dto.EmployeeDto;
+import ru.julia.employeebook2.service.DepartmentService;
 import ru.julia.employeebook2.service.EmployeeService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,5 +32,10 @@ public class EmployeeController {
     @GetMapping("/find")
     public EmployeeDto find(@RequestParam String firstName, @RequestParam String lastName) {
         return employeeService.find(firstName, lastName);
+    }
+
+    @GetMapping("/findAll")
+    public List<EmployeeDto> findAll() {
+        return employeeService.findAll();
     }
 }
