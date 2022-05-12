@@ -17,8 +17,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     Map<FirstNameAndLastName, Employee> employees = new HashMap<>();
 
     @Override
-    public String add(Integer id, String firstName, String lastName, Integer salary, Integer departmentId) {
-        Employee employee = new Employee(id, firstName, lastName, salary, departmentId);
+    public String add(String firstName, String lastName, Integer salary) {
+        Employee employee = new Employee(firstName, lastName, salary);
         FirstNameAndLastName firstNameAndLastName = new FirstNameAndLastName(firstName, lastName);
         employees.put(firstNameAndLastName, employee);
         return "Сотрудник " + firstName + " " + lastName + " успешно создан";
