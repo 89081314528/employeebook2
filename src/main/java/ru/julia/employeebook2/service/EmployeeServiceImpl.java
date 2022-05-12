@@ -43,8 +43,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         Employee employee = employeeList.get(0);
 
-        EmployeeDto employeeDto = new EmployeeDto(employee.getEmployeeId(), employee.getFirstName(), employee.getLastName(),
-                employee.getSalary(), employee.getEmployeeId());
+        EmployeeDto employeeDto = new EmployeeDto(
+                employee.getEmployeeId(),
+                employee.getFirstName(),
+                employee.getLastName(),
+                employee.getSalary(),
+                employee.getEmployeeId());
         return employeeDto;
     }
 
@@ -52,8 +56,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeDto> findAll() {
         List<Employee> employees = employeeRepository.findAll();
         return employees.stream()
-                .map(e -> new EmployeeDto(e.getEmployeeId(), e.getFirstName(),
-                        e.getLastName(), e.getSalary(), e.getDepartment().getDeptId()))
+                .map(e -> new EmployeeDto(
+                        e.getEmployeeId(),
+                        e.getFirstName(),
+                        e.getLastName(),
+                        e.getSalary(),
+                        e.getDepartment().getDeptId()))
                 .collect(Collectors.toList());
     }
 }

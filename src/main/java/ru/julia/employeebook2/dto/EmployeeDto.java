@@ -3,13 +3,13 @@ package ru.julia.employeebook2.dto;
 import java.util.Objects;
 
 public class EmployeeDto {
-    private Integer employeeId;
-    private String firstName;
-    private String lastName;
-    private Integer salary;
-    private Integer departmentId;
+    private final int employeeId;
+    private final String firstName;
+    private final String lastName;
+    private final int salary;
+    private final int departmentId;
 
-    public EmployeeDto(Integer employeeId, String firstName, String lastName, Integer salary, Integer departmentId) {
+    public EmployeeDto(int employeeId, String firstName, String lastName, int salary, int departmentId) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -17,11 +17,11 @@ public class EmployeeDto {
         this.departmentId = departmentId;
     }
 
-    public Integer getDepartmentId() {
+    public int getDepartmentId() {
         return departmentId;
     }
 
-    public Integer getEmployeeId() {
+    public int getEmployeeId() {
         return employeeId;
     }
 
@@ -33,7 +33,7 @@ public class EmployeeDto {
         return lastName;
     }
 
-    public Integer getSalary() {
+    public int getSalary() {
         return salary;
     }
 

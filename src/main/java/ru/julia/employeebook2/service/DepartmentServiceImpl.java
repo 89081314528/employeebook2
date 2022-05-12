@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.julia.employeebook2.dto.EmployeeDto;
 import ru.julia.employeebook2.dto.SalaryComparator;
+import ru.julia.employeebook2.exception.EmployeeNotFound;
 
 import java.util.Comparator;
 import java.util.List;
