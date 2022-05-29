@@ -6,7 +6,7 @@ import java.util.Objects;
 @Data
 public class Employee {
     // сделать чтобы все сотрудники были в одном экземпляре
-    // проверить контроллер
+    // проверить контроллер и сервис
     // комментарии по дз 2.8
     private String firstName;
     private String lastName;
