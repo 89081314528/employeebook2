@@ -24,18 +24,16 @@ public class DepartmentServiceImpl implements DepartmentService {
         return employees.stream()
                 .filter(employeeDto -> Objects.equals(employeeDto.getDepartmentId(), departmentId))
                 .max(comparator)//здесь optional (в нем или сотрудник с мах зарплатой или null)
-                .orElseThrow(); // здесь сотрудник или исключение если был null
+                .orElseThrow(() -> new EmployeeNotFound()); // здесь сотрудник или исключение если был null
     }
 
     @Override
     public EmployeeDto getEmployeeWithMinSalaryByDepartment(Integer departmentId) {
         // 2 вариант написания компаратора
-        Comparator<EmployeeDto> comparator = Comparator.comparing(EmployeeDto::getSalary);
-        List<EmployeeDto> employees = employeeService.findAll();
-        return employees.stream()
+        return employeeService.findAll().stream()
                 .filter(employeeDto -> Objects.equals(employeeDto.getDepartmentId(), departmentId))
-                .min(comparator)
-                .orElseThrow();
+                .min(Comparator.comparing(EmployeeDto::getSalary))
+                .orElseThrow(() -> new EmployeeNotFound());
     }
 
     @Override

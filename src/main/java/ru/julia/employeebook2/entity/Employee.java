@@ -1,15 +1,14 @@
 package ru.julia.employeebook2.entity;
 
+import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "emps2")
 @Data
+@Builder
 public class Employee {
 
     @Column(name = "emp_id")
@@ -42,11 +41,18 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return Objects.equals(employeeId, employee.employeeId) && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(salary, employee.salary);
+        if (employeeId == null) {
+            return false;
+        }
+        return Objects.equals(employeeId, employee.employeeId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeId, firstName, lastName, salary);
+        return 42;
     }
+
+    //у энтити хэш код должен возвращать 42
+    //у энтити equals должен возвращать false, если id = null/ если id не равен null, equals должен возвращать
+    // сравнение с айди другой сущности
 }

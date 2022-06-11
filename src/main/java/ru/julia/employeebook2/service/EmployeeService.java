@@ -7,6 +7,7 @@ import java.util.List;
 public interface EmployeeService {
     String add (String firstName, String lastName, Integer salary);
     String remove (String firstName, String lastName);
+    String remove (Integer id);
     EmployeeDto find (String firstName, String lastName);
     List<EmployeeDto> findAll();
 
